@@ -1,6 +1,14 @@
 {% set name = "orange-widget-base" %}
 {% set version = "4.17.0" %}
 
+# on our linux builders there is no X11 installed and therefore import
+# test will fail
+{% if target_platform != "linux-aarch64" and target_platform != "linux-64"%}
+{% set enable_testingui = true %}
+{% else %}
+{% set enable_testingui = false %}
+{% endif %}
+
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -31,10 +39,12 @@ requirements:
     # appnope is skipped here since if we add it package is not noarch: python anymore
     # and appnope is used just optionally in tests
 
+{% if enable_testingui %}
 test:
   imports:
     - orangewidget.widget
     - orangewidget.gui
+{% endif %}
 
 about:
   home: https://github.com/biolab/orange-widget-base
