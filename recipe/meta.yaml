@@ -1,5 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.7.0" %}
+{% set version = "4.17.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,24 +7,29 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3da7c6898fb65e09188c03ddfd1a4a7292ccd46cf85794239e7b23a418f6e19d
+  sha256: 8897491277ce80a1ea49306552be778ece4d0bf8fad3373388936554c32bccd8
 
 build:
-  noarch: python
-  number: 1
-  script: "{{ PYTHON }} -m pip install . -vv"
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+  skip: True  # [py<36]
+  skip: True  # [linux and (s390x or ppc64le)]
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
+    - setuptools
+    - wheel
   run:
-    - python >=3.6
-    - matplotlib
+    - python
+    - matplotlib-base
     - pyqtgraph
-    - anyqt
-    - orange-canvas-core >=0.1.8
-    - appnope [osx]
+    - anyqt >=0.1.0
+    - orange-canvas-core >=0.1.20,<0.2a
+    - typing_extensions >=3.7.4.3
+    # appnope is skipped here since if we add it package is not noarch: python anymore
+    # and appnope is used just optionally in tests
 
 test:
   imports:
@@ -33,14 +38,15 @@ test:
 
 about:
   home: https://github.com/biolab/orange-widget-base
-  license: GPL-3.0
+  license: GPL-3.0-only
   license_family: GPL
   license_file: LICENSE
-  summary: 'Base Widget for Orange Canvas'
+  summary: Base Widget for Orange Canvas
 
   description: |
     This project implements the base OWBaseWidget class and utilities for use
     in Orange Canvas workflows.
+
   doc_url: https://orange-widget-base.readthedocs.io/
   dev_url: https://github.com/biolab/orange-widget-base/
 
