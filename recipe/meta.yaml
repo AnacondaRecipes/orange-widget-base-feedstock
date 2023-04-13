@@ -20,6 +20,8 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv
+  skip: True  # [py<38]
+  skip: True  # [linux and (s390x or ppc64le)]
 
 requirements:
   host:
