@@ -19,16 +19,18 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: True  # [py<38]
   skip: True  # [linux and (s390x or ppc64le)]
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
+    - setuptools
+    - wheel
   run:
-    - python >=3.6
+    - python
     - matplotlib-base
     - pyqtgraph
     - anyqt >=0.1.0
