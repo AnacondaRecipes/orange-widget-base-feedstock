@@ -44,6 +44,12 @@ test:
   imports:
     - orangewidget.widget
     - orangewidget.gui
+  source_files:
+    - orangewidget/tests
+  command:
+    - pytest orangewidget/tests
+  requires:
+    - pytest
 {% endif %}
 
 about:
