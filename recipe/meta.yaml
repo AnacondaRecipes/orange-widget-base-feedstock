@@ -39,8 +39,8 @@ requirements:
     # appnope is skipped here since if we add it package is not noarch: python anymore
     # and appnope is used just optionally in tests
 
-{% if enable_testingui %}
 test:
+{% if enable_testingui %}
   imports:
     - orangewidget.widget
     - orangewidget.gui
@@ -50,6 +50,10 @@ test:
     - pytest orangewidget/tests
   requires:
     - pytest
+{% else %}
+  imports:
+    - orangewidget.widget
+    - orangewidget.io
 {% endif %}
 
 about:
