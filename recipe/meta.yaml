@@ -40,21 +40,27 @@ requirements:
     # and appnope is used just optionally in tests
 
 test:
+  imports:
+    - orangewidget.widget
 {% if enable_testingui %}
-  imports:
-    - orangewidget.widget
     - orangewidget.gui
-  source_files:
-    - orangewidget/tests
-  command:
-    - pytest orangewidget/tests
-  requires:
-    - pytest
 {% else %}
-  imports:
-    - orangewidget.widget
     - orangewidget.io
 {% endif %}
+{% if enable_testingui %}
+  source_files:
+    - orangewidget/tests
+{% endif %}
+  command:
+{% if enable_testingui %}
+    - pytest orangewidget/tests
+{% endif %}
+    - pip check
+  requires:
+{% if enable_testingui %}
+    - pytest
+{% endif %}
+    - pip
 
 about:
   home: https://github.com/biolab/orange-widget-base
