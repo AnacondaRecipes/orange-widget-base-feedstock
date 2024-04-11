@@ -1,5 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.19.0" %}
+{% set version = "4.22.0" %}
 
 # on our linux builders there is no X11 installed and therefore import
 # test will fail
@@ -15,7 +15,9 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 193055dbee8701ad62d5471c5287b092ce53bb77f7f810ec68bf96816f6acaa2
+  sha256: 9d5d9a04f6739fb2be4040ad095a0b2e1e6c986df5cc4d86f631532a5c61f6a3
+  patches:
+    - patches/0001-setup.py-Replace-use-of-imp-module.patch
 
 build:
   number: 0
@@ -24,6 +26,9 @@ build:
   skip: True  # [linux and (s390x or ppc64le)]
 
 requirements:
+  build:
+    - patch     # [not win]
+    - m2-patch  # [win]
   host:
     - python
     - pip
@@ -34,10 +39,9 @@ requirements:
     - matplotlib-base
     - pyqtgraph
     - anyqt >=0.1.0
-    - orange-canvas-core >=0.1.27,<0.2a
+    - orange-canvas-core >=0.1.30,<0.2a
     - typing_extensions >=3.7.4.3
-    # appnope is skipped here since if we add it package is not noarch: python anymore
-    # and appnope is used just optionally in tests
+    - appnope  # [osx]
 
 test:
   imports:
@@ -63,7 +67,7 @@ test:
     - pip
 
 about:
-  home: https://github.com/biolab/orange-widget-base
+  home: https://orangedatamining.com/
   license: GPL-3.0-only
   license_family: GPL
   license_file: LICENSE

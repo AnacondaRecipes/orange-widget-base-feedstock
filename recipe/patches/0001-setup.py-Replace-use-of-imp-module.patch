@@ -1,0 +1,30 @@
+From eebc02ebde70b6caa54f538e29ef10ff4fac27e9 Mon Sep 17 00:00:00 2001
+From: Ales Erjavec <ales.erjavec@fri.uni-lj.si>
+Date: Fri, 22 Dec 2023 09:44:12 +0100
+Subject: [PATCH] setup.py: Replace use of imp module
+
+---
+ setup.py | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 043662ce..bc222e70 100755
+--- a/setup.py
++++ b/setup.py
+@@ -119,8 +119,12 @@ if not release:
+         GIT_REVISION = git_version()
+     elif os.path.exists(filename):
+         # must be a source distribution, use existing version file
+-        import imp
+-        version = imp.load_source("orangewidget.version", filename)
++        import importlib.util
++        spec = importlib.util.spec_from_file_location(
++            "orangewidget.version", filename
++        )
++        version = importlib.util.module_from_spec(spec)
++        spec.loader.exec_module(version)
+         GIT_REVISION = version.git_revision
+     else:
+         GIT_REVISION = "Unknown"
+--
+2.32.1 (Apple Git-133)
