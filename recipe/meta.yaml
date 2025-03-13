@@ -1,5 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.22.0" %}
+{% set version = "4.25.1" %}
 
 # on our linux builders there is no X11 installed and therefore import
 # test will fail
@@ -14,16 +14,13 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9d5d9a04f6739fb2be4040ad095a0b2e1e6c986df5cc4d86f631532a5c61f6a3
-  patches:
-    - patches/0001-setup.py-Replace-use-of-imp-module.patch
+  url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 14a42660ed832523b197f3d27aa2193d2f8213732d427b74bbe6401e9fe01ba6
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: True  # [py<36]
-  skip: True  # [linux and (s390x or ppc64le)]
+  skip: True  # [py<38 or s390x]
 
 requirements:
   build:
@@ -34,14 +31,20 @@ requirements:
     - pip
     - setuptools
     - wheel
+    - trubar >=0.3.3
   run:
     - python
     - matplotlib-base
     - pyqtgraph
     - anyqt >=0.1.0
-    - orange-canvas-core >=0.1.30,<0.2a
+    - orange-canvas-core >=0.2a.dev0,<0.3a
     - typing_extensions >=3.7.4.3
+    - importlib_resources  # [py<310]
+    - importlib_metadata
     - appnope  # [osx]
+  run_constrained:
+    - pyqt <= 6.0.0
+  # pyqt required due to transient dependcies pulled. This is a workaround.
 
 test:
   imports:
@@ -72,11 +75,9 @@ about:
   license_family: GPL
   license_file: LICENSE
   summary: Base Widget for Orange Canvas
-
   description: |
     This project implements the base OWBaseWidget class and utilities for use
     in Orange Canvas workflows.
-
   doc_url: https://orange-widget-base.readthedocs.io/
   dev_url: https://github.com/biolab/orange-widget-base/
 
