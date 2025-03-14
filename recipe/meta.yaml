@@ -19,7 +19,7 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
   skip: True  # [py<39 or s390x]
 
 requirements:
@@ -39,6 +39,7 @@ requirements:
     - importlib_resources  # [py<310]
     - importlib_metadata
     - appnope  # [osx]
+  # importlib_metadata is not mentioned in the setup.py, but is called by runtime.
   run_constrained:
     - pyqt <= 6.0.0
   # pyqt required due to transient dependcies pulled. This is a workaround.
