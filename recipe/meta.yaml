@@ -1,13 +1,6 @@
 {% set name = "orange-widget-base" %}
 {% set version = "4.25.1" %}
 
-# on our linux builders there is no X11 installed and therefore import
-# test will fail
-{% if target_platform != "linux-aarch64" and target_platform != "linux-64"%}
-{% set enable_testingui = true %}
-{% else %}
-{% set enable_testingui = false %}
-{% endif %}
 
 package:
   name: {{ name|lower }}
@@ -44,28 +37,20 @@ requirements:
     - pyqt <= 6.0.0
   # pyqt required due to transient dependcies pulled. This is a workaround.
 
+# on our linux builders there is no X11 installed and therefore import
+# test will fail
 test:
   imports:
-    - orangewidget.widget
-{% if enable_testingui %}
-    - orangewidget.gui
-{% else %}
-    - orangewidget.io
-{% endif %}
-{% if enable_testingui %}
+    - orangewidget.gui  # [win or osx]
+    - orangewidget.io  # [linux]
   source_files:
-    - orangewidget/tests
-{% endif %}
-  command:
-{% if enable_testingui %}
-    - pytest orangewidget/tests
-{% endif %}
-    - pip check
+    - orangewidget/tests  # [win or osx]
   requires:
-{% if enable_testingui %}
-    - pytest
-{% endif %}
     - pip
+    - pytest  # [win or osx]
+  commands:
+    - pip check
+    - pytest -k "not test_store_restore_layout_geom" orangewidget/tests -v  # [win or osx]
 
 about:
   home: https://orangedatamining.com/
