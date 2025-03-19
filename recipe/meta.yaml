@@ -50,7 +50,7 @@ test:
     - pytest  # [win or osx]
   commands:
     - pip check
-    - pytest -k "not test_store_restore_layout_geom" orangewidget/tests -v  # [win or osx]
+    - pytest -k "not test_store_restore_layout_geom" orangewidget/tests -v  # [win or (osx and arm64)]
 
 about:
   home: https://orangedatamining.com/
