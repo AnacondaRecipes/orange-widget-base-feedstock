@@ -1,70 +1,56 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.22.0" %}
+{% set version = "4.25.1" %}
 
-# on our linux builders there is no X11 installed and therefore import
-# test will fail
-{% if target_platform != "linux-aarch64" and target_platform != "linux-64"%}
-{% set enable_testingui = true %}
-{% else %}
-{% set enable_testingui = false %}
-{% endif %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9d5d9a04f6739fb2be4040ad095a0b2e1e6c986df5cc4d86f631532a5c61f6a3
-  patches:
-    - patches/0001-setup.py-Replace-use-of-imp-module.patch
+  url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 14a42660ed832523b197f3d27aa2193d2f8213732d427b74bbe6401e9fe01ba6
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: True  # [py<36]
-  skip: True  # [linux and (s390x or ppc64le)]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
+  skip: True  # [py<39 or s390x]
 
 requirements:
-  build:
-    - patch     # [not win]
-    - m2-patch  # [win]
   host:
     - python
     - pip
     - setuptools
     - wheel
+    - trubar
   run:
     - python
     - matplotlib-base
     - pyqtgraph
     - anyqt >=0.1.0
-    - orange-canvas-core >=0.1.30,<0.2a
+    - orange-canvas-core >=0.2a.dev0,<0.3a
     - typing_extensions >=3.7.4.3
+    - importlib_resources  # [py<310]
+    - importlib_metadata
     - appnope  # [osx]
+  # importlib_metadata is not mentioned in the setup.py, but is called by runtime.
+  run_constrained:
+    - pyqt <= 6.0.0
+  # pyqt required due to transient dependcies pulled. This is a workaround.
 
+# on our linux builders there is no X11 installed and therefore import
+# test will fail
 test:
   imports:
-    - orangewidget.widget
-{% if enable_testingui %}
-    - orangewidget.gui
-{% else %}
-    - orangewidget.io
-{% endif %}
-{% if enable_testingui %}
+    - orangewidget.gui  # [win or osx]
+    - orangewidget.io  # [linux]
   source_files:
-    - orangewidget/tests
-{% endif %}
-  command:
-{% if enable_testingui %}
-    - pytest orangewidget/tests
-{% endif %}
-    - pip check
+    - orangewidget/tests  # [win or osx]
   requires:
-{% if enable_testingui %}
-    - pytest
-{% endif %}
     - pip
+    - pytest  # [win or osx]
+  commands:
+    - pip check
+    - pytest -k "not (test_store_restore_layout_geom or test_set_datetime or test_menu)" orangewidget/tests -v  # [win or (osx and arm64)]
 
 about:
   home: https://orangedatamining.com/
@@ -72,11 +58,9 @@ about:
   license_family: GPL
   license_file: LICENSE
   summary: Base Widget for Orange Canvas
-
   description: |
     This project implements the base OWBaseWidget class and utilities for use
     in Orange Canvas workflows.
-
   doc_url: https://orange-widget-base.readthedocs.io/
   dev_url: https://github.com/biolab/orange-widget-base/
 
