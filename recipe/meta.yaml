@@ -28,10 +28,7 @@ requirements:
     - anyqt >=0.1.0
     - orange-canvas-core >=0.2a.dev0,<0.3a
     - typing_extensions >=3.7.4.3
-    - importlib_resources  # [py<310]
-    - importlib_metadata
-    - appnope  # [darwin]
-  # importlib_metadata is not mentioned in the setup.py, but is called by runtime.
+    - appnope  # [osx]
   run_constrained:
     - pyqt <= 6.0.0
   # pyqt required due to transient dependcies pulled. This is a workaround.
