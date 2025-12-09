@@ -1,6 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.25.1" %}
-
+{% set version = "4.26.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,12 +7,12 @@ package:
 
 source:
   url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 14a42660ed832523b197f3d27aa2193d2f8213732d427b74bbe6401e9fe01ba6
+  sha256: 178ae4cce0cfa6229ff68b47b19ef51a46c4c1633cdc3b8271766de866bfa42f
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-  skip: True  # [py<39 or s390x]
+  skip: true  # [py<39 or s390x]
 
 requirements:
   host:
@@ -21,7 +20,7 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - trubar
+    - trubar >=0.3.3
   run:
     - python
     - matplotlib-base
@@ -31,7 +30,7 @@ requirements:
     - typing_extensions >=3.7.4.3
     - importlib_resources  # [py<310]
     - importlib_metadata
-    - appnope  # [osx]
+    - appnope  # [darwin]
   # importlib_metadata is not mentioned in the setup.py, but is called by runtime.
   run_constrained:
     - pyqt <= 6.0.0
