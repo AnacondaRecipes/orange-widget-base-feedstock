@@ -41,7 +41,7 @@ requirements:
 {% set skip_tests = skip_tests + " --deselect=test_set_datetime" %}
 {% set skip_tests = skip_tests + " --deselect=test_menu" %}
 # breaks on CI
-{% set skip_tests = skip_tests + " --deselect=ControlGetterTests::test_getter" %}             # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}             # [osx]
 {% set skip_tests = skip_tests + " --deselect=test_checked_extension" %}  # [osx]
 
 test:
