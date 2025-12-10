@@ -12,7 +12,9 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-  skip: true  # [py<310]
+  # Capping to Python 3.12 as per dependency orange-canvas-core->commonmark->future don't allow for py>=313 and it
+  # seems like that isn't going to change (markdown: archived, future: https://github.com/PythonCharmers/python-future/issues/640)
+  skip: true  # [py<310 or py>312]
 
 requirements:
   host:
@@ -30,26 +32,23 @@ requirements:
     - typing_extensions >=3.7.4.3
     - appnope  # [osx]
   run_constrained:
-  # TODO: remove, testing problem on CI
-    - orange-widget-base =4.26.0
     - pyqt <= 6.0.0
   # pyqt required due to transient dependcies pulled. This is a workaround.
 
 # on our linux builders there is no X11 installed and therefore import
 # test will fail
-#test:
-#  imports:
-#    - orangewidget.gui  # [win or osx]
-#    - orangewidget.io  # [linux]
-#  source_files:
-#    - orangewidget/tests  # [win or osx]
-#  requires:
-#    - orange-widget-base =4.26.0
-#    - pip
-#    - pytest  # [win or osx]
-#  commands:
-#    - pip check
-#    - pytest -k "not (test_store_restore_layout_geom or test_set_datetime or test_menu)" orangewidget/tests -v  # [win or (osx and arm64)]
+test:
+  imports:
+    - orangewidget.gui  # [win or osx]
+    - orangewidget.io  # [linux]
+  source_files:
+    - orangewidget/tests  # [win or osx]
+  requires:
+    - pip
+    - pytest  # [win or osx]
+  commands:
+    - pip check
+    - pytest -k "not (test_store_restore_layout_geom or test_set_datetime or test_menu)" orangewidget/tests -v  # [win or (osx and arm64)]
 
 about:
   home: https://orangedatamining.com/
