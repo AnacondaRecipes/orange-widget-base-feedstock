@@ -69,10 +69,8 @@ about:
   license: GPL-3.0-only
   license_family: GPL
   license_file: LICENSE
-  summary: Base Widget for Orange Canvas
-  description: |
-    This project implements the base OWBaseWidget class and utilities for use
-    in Orange Canvas workflows.
+  summary: Core component of Orange Canvas
+  description: Orange Canvas Core is a framework for building graphical user interfaces for editing workflows. It is a component used to build the Orange Canvas data-mining application (for which it was developed in the first place).
   doc_url: https://orange-widget-base.readthedocs.io
   dev_url: https://github.com/biolab/orange-widget-base
 
