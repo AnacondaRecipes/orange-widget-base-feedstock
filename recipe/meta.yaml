@@ -42,7 +42,7 @@ requirements:
 {% set skip_tests = skip_tests + " --deselect=test_menu" %}
 # breaks on CI
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}             # [osx]
-{% set skip_tests = skip_tests + " --deselect=test_checked_extension" %}  # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestDoubleSpin::test_checked_extension" %}  # [osx]
 
 test:
   imports:
