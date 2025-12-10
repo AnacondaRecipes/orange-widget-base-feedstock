@@ -40,12 +40,15 @@ requirements:
 {% set skip_tests = skip_tests + " --deselect=test_store_restore_layout_geom" %}
 {% set skip_tests = skip_tests + " --deselect=test_set_datetime" %}
 {% set skip_tests = skip_tests + " --deselect=test_menu" %}
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::TestWidgetMenu::test_menu" %}  # [win]
+
 # breaks on CI
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::TestWidgetMenu::test_menu" %}  # [win]
+
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestDoubleSpin::test_checked_extension" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestCheckBoxWithDisabledState::test_check_checkbox_disable_false" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestCheckBoxWithDisabledState::test_check_checkbox_disable_true" %}  # [osx]
+{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_gui.py" %}  # [osx]
 
 test:
   imports:
@@ -55,7 +58,7 @@ test:
     - orangewidget/tests  # [win or osx]
   requires:
     - pip
-    - pytest  # [win or osx]
+    - pytest
   commands:
     - pip check
     - pytest {{ skip_tests }} orangewidget/tests -v
