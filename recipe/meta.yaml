@@ -36,12 +36,12 @@ requirements:
     - pyqt <= 6.0.0
 
 {% set skip_tests = "" %}
-# on our linux builders there is no X11 installed and therefore import test will fail
+# On our Linux builders there is no X11 installed and therefore import test will fail - Skip all tests on Linux.
+# On other platforms, various tests breaks on CI due to lack of UI (headless) - Skip failing tests. 
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::test_store_restore_layout_geom" %}
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::test_menu" %}
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::test_set_datetime" %}
 
-# breaks on CI
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::TestWidgetMenu::test_menu" %}  # [win]
 
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}  # [osx]
@@ -53,6 +53,10 @@ requirements:
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::WidgetTestCase::test_notify_controller_on_attribute_change" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::WidgetTestCase::test_reset_settings" %}  # [osx]
 {% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_widget.py" %}  # [osx]
+
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestIO::test_pdf" %}  # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_other" %}  # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_pyqtgraph" %}  # [osx]
 
 test:
   imports:
