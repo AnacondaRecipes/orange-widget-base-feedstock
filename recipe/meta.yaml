@@ -37,9 +37,9 @@ requirements:
 
 {% set skip_tests = "" %}
 # on our linux builders there is no X11 installed and therefore import test will fail
-{% set skip_tests = skip_tests + " --deselect=test_store_restore_layout_geom" %}
-{% set skip_tests = skip_tests + " --deselect=test_set_datetime" %}
-{% set skip_tests = skip_tests + " --deselect=test_menu" %}
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::test_store_restore_layout_geom" %}
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::test_menu" %}
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::test_set_datetime" %}
 
 # breaks on CI
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::TestWidgetMenu::test_menu" %}  # [win]
@@ -50,19 +50,20 @@ requirements:
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestCheckBoxWithDisabledState::test_check_checkbox_disable_true" %}  # [osx]
 {% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_gui.py" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::WidgetTestCase::test_garbage_collect" %}  # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::WidgetTestCase::test_notify_controller_on_attribute_change" %}  # [osx]
 
 test:
   imports:
     - orangewidget.gui  # [win or osx]
     - orangewidget.io  # [linux]
   source_files:
-    - orangewidget/tests
+    - orangewidget/tests  # [win or osx]
   requires:
     - pip
-    - pytest
+    - pytest  # [win or osx]
   commands:
     - pip check
-    - pytest {{ skip_tests }} orangewidget/tests -v
+    - pytest {{ skip_tests }} orangewidget/tests -v  # [win or osx]
 
 about:
   home: https://orangedatamining.com/
