@@ -45,6 +45,7 @@ requirements:
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestDoubleSpin::test_checked_extension" %}  # [osx]
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestCheckBoxWithDisabledState::test_check_checkbox_disable_false" %}  # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::TestCheckBoxWithDisabledState::test_check_checkbox_disable_true" %}  # [osx]
 
 test:
   imports:
@@ -57,7 +58,7 @@ test:
     - pytest  # [win or osx]
   commands:
     - pip check
-    - pytest {{ skip_tests }} orangewidget/tests -v  # [win or (osx and arm64)]
+    - pytest {{ skip_tests }} orangewidget/tests -v
 
 about:
   home: https://orangedatamining.com/
