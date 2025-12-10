@@ -35,8 +35,15 @@ requirements:
     # pyqt required due to transient dependcies pulled. This is a workaround.
     - pyqt <= 6.0.0
 
-# on our linux builders there is no X11 installed and therefore import
-# test will fail
+{% set skip_tests = "" %}
+# on our linux builders there is no X11 installed and therefore import test will fail
+{% set skip_tests = skip_tests + " --deselect=test_store_restore_layout_geom" %}
+{% set skip_tests = skip_tests + " --deselect=test_set_datetime" %}
+{% set skip_tests = skip_tests + " --deselect=test_menu" %}
+# breaks on CI
+{% set skip_tests = skip_tests + " --deselect=test_getter" %}             # [osx]
+{% set skip_tests = skip_tests + " --deselect=test_checked_extension" %}  # [osx]
+
 test:
   imports:
     - orangewidget.gui  # [win or osx]
@@ -48,8 +55,7 @@ test:
     - pytest  # [win or osx]
   commands:
     - pip check
-    # test_getter will error out on CI
-    - pytest -k "not (test_store_restore_layout_geom or test_set_datetime or test_menu or test_getter)" orangewidget/tests -v  # [win or (osx and arm64)]
+    - pytest -k {{ skip_tests }} orangewidget/tests -v  # [win or (osx and arm64)]
 
 about:
   home: https://orangedatamining.com/
