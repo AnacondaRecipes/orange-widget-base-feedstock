@@ -65,7 +65,7 @@ test:
     - pytest {{ skip_tests }} orangewidget/tests -v  # [win or osx]
 
 about:
-  home: https://orangedatamining.com/
+  home: https://orangedatamining.com
   license: GPL-3.0-only
   license_family: GPL
   license_file: LICENSE
@@ -73,8 +73,8 @@ about:
   description: |
     This project implements the base OWBaseWidget class and utilities for use
     in Orange Canvas workflows.
-  doc_url: https://orange-widget-base.readthedocs.io/
-  dev_url: https://github.com/biolab/orange-widget-base/
+  doc_url: https://orange-widget-base.readthedocs.io
+  dev_url: https://github.com/biolab/orange-widget-base
 
 extra:
   recipe-maintainers:
