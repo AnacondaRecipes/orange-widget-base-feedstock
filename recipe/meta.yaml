@@ -1,6 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.25.1" %}
-
+{% set version = "4.27.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,12 +7,12 @@ package:
 
 source:
   url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 14a42660ed832523b197f3d27aa2193d2f8213732d427b74bbe6401e9fe01ba6
+  sha256: c8ecbc018111673223a1b8b61d4c9f14b9ba6b3e980ad38ff3188889cadb5d88
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-  skip: True  # [py<39 or s390x]
+  skip: true  # [py<39 or s390x]
 
 requirements:
   host:
