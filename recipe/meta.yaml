@@ -54,13 +54,13 @@ test:
     - orangewidget.widget  # [win or osx]
     - orangewidget.io  # [linux]
   source_files:
-    - orangewidget/tests  # [win or osx]
+    - orangewidget/tests
   requires:
     - pip
-    - pytest  # [win or osx]
+    - pytest
   commands:
     - pip check
-    - pytest {{ skip_tests }} orangewidget/tests -v  # [win or osx]
+    - pytest {{ skip_tests }} orangewidget/tests -v
 
 about:
   home: https://orangedatamining.com
