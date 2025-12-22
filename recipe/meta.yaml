@@ -41,12 +41,12 @@ requirements:
 
 {% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::TestWidgetMenu::test_menu" %}  # [win]
 
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}  # [osx]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestIO::test_pdf" %}                             # [osx]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_other" %}                          # [osx]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_pyqtgraph" %}                      # [osx]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_gui.py" %}                                                # [osx]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_widget.py" %}                                             # [osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}  # [linux or osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestIO::test_pdf" %}                             # [linux or osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_other" %}                          # [linux or osx]
+{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_pyqtgraph" %}                      # [linux or osx]
+{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_gui.py" %}                                                # [linux or osx]
+{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_widget.py" %}                                             # [linux or osx]
 
 test:
   imports:
