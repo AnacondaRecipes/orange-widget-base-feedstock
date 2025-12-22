@@ -12,9 +12,6 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-  # Capping to Python 3.12 as per dependency orange-canvas-core->commonmark->future don't allow for py>=313 and it
-  # seems like that isn't going to change (markdown: archived, future: https://github.com/PythonCharmers/python-future/issues/640)
-  skip: true  # [py<310]
 
 requirements:
   host:
