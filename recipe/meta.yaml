@@ -51,6 +51,7 @@ requirements:
 test:
   imports:
     - orangewidget.gui  # [win or osx]
+    - orangewidget.widget  # [win or osx]
     - orangewidget.io  # [linux]
   source_files:
     - orangewidget/tests  # [win or osx]
