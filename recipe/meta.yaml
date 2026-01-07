@@ -1,13 +1,13 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.26.0" %}
+{% set version = "4.27.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 178ae4cce0cfa6229ff68b47b19ef51a46c4c1633cdc3b8271766de866bfa42f
+  sha256: c8ecbc018111673223a1b8b61d4c9f14b9ba6b3e980ad38ff3188889cadb5d88
 
 build:
   number: 0
@@ -25,43 +25,28 @@ requirements:
     - matplotlib-base
     - pyqtgraph
     - anyqt >=0.1.0
-    - orange-canvas-core >=0.2a.dev0,<0.3a
     - typing_extensions >=3.7.4.3
+    - orange-canvas-core >=0.2a.dev0,<0.3a
     - appnope  # [osx]
   run_constrained:
     # pyqt required due to transient dependcies pulled. This is a workaround.
-    - pyqt <= 6.0.0
+    - pyqt <=6.0.0
 
-{% set skip_tests = "" %}
-# Various tests breaks on CI due to lack of UI (headless) - Skip failing tests. 
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::test_store_restore_layout_geom" %}
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::test_menu" %}
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_gui.py::test_set_datetime" %}
-
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_widget.py::TestWidgetMenu::test_menu" %}                # [win]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_control_getter.py" %}                                     # [linux]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_io.py" %}                                                 # [linux]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_matplotlib_export.py" %}                                  # [linux]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_control_getter.py::ControlGetterTests::test_getter" %}  # [linux or osx]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestIO::test_pdf" %}                             # [linux or osx]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_other" %}                          # [linux or osx]
-{% set skip_tests = skip_tests + " --deselect=orangewidget/tests/test_io.py::TestPdf::test_pyqtgraph" %}                      # [linux or osx]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_gui.py" %}                                                # [linux or osx]
-{% set skip_tests = skip_tests + " --ignore=orangewidget/tests/test_widget.py" %}                                             # [linux or osx]
-
+# >   self.assertTrue(timer.isActive())
+# E   AssertionError: False is not true
+{% set deselect_tests = " --deselect=test_widget.py::TestWidgetMenu::test_menu" %}
 test:
   imports:
     - orangewidget.gui
     - orangewidget.widget
     - orangewidget.io  # [linux]
-  source_files:
-    - orangewidget/tests
+  commands:
+    - pip check
+    - export QT_QPA_PLATFORM=offscreen  # [unix]
+    - pytest --pyargs orangewidget.tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
-  commands:
-    - pip check
-    - pytest {{ skip_tests }} orangewidget/tests -v
 
 about:
   home: https://orangedatamining.com
