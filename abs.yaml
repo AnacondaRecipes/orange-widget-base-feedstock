@@ -3,3 +3,4 @@ build_env_vars:
 
 channels:
   - https://staging.continuum.io/pbp/fs/orange-canvas-core-feedstock/pr6/4a08c19
+  - https://staging.continuum.io/pbp/fs/commonmark-feedstock/pr2/62ba012
