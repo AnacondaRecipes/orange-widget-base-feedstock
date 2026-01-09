@@ -1,6 +1,2 @@
 build_env_vars:
   ANACONDA_ROCKET_ENABLE_PY314 : yes
-
-channels:
-  - https://staging.continuum.io/pbp/fs/orange-canvas-core-feedstock/pr6/4a08c19
-  - https://staging.continuum.io/pbp/fs/commonmark-feedstock/pr2/62ba012
