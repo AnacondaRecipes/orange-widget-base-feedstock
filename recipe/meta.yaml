@@ -1,5 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.27.0" %}
+{% set version = "4.29.0" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: c8ecbc018111673223a1b8b61d4c9f14b9ba6b3e980ad38ff3188889cadb5d88
+  sha256: f328065ae7468f0ffebba877516b9c956364840fbb67c89ee57a980a26f86f5e
 
 build:
   number: 0
