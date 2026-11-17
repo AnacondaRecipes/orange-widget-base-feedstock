@@ -1,2 +1,3 @@
 channels:
-  - https://staging.continuum.io/pbp/fs/orange-canvas-core-feedstock/pr10/5f44b3c
+  - https://staging.continuum.io/pbp/fs/qasync-feedstock/pr4/0cb86d3
+  - https://staging.continuum.io/pbp/fs/orange-canvas-core-feedstock/pr10/f32f3e0
