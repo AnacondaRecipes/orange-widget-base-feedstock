@@ -1,5 +1,5 @@
 {% set name = "orange-widget-base" %}
-{% set version = "4.27.0" %}
+{% set version = "4.29.0" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/biolab/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: c8ecbc018111673223a1b8b61d4c9f14b9ba6b3e980ad38ff3188889cadb5d88
+  sha256: f328065ae7468f0ffebba877516b9c956364840fbb67c89ee57a980a26f86f5e
 
 build:
   number: 0
@@ -28,9 +28,6 @@ requirements:
     - typing_extensions >=3.7.4.3
     - orange-canvas-core >=0.2a.dev0,<0.3a
     - appnope  # [osx]
-  run_constrained:
-    # pyqt required due to transient dependcies pulled. This is a workaround.
-    - pyqt <=6.0.0
 
 # >   self.assertTrue(timer.isActive())
 # E   AssertionError: False is not true
